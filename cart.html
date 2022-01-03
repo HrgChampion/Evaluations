@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #cont{
+            display:grid;
+            grid-template-columns:repeat(4,1fr);
+            grid-template-rows: 300px;
+            grid-gap:50px;
+        }
+    </style>
+</head>
+<body>
+    <div id="total">Total</div>
+    <div id="cont"></div>
+</body>
+</html>
+<script>
+       var cart=JSON.parse(localStorage.getItem("dishcart"))||[];
+       var count=JSON.parse(localStorage.getItem("counter"));
+     display(cart)
+     var sum=0;
+     function display(cart){
+        document.querySelector("#cont").innerHTML="";
+         cart.forEach(function(elem,index){
+
+         
+        var div=document.createElement("div");
+        var image=document.createElement("img");
+        image.src=elem.strCategoryThumb;
+        var price=document.createElement("p");
+        price.innerText=Math.floor(Math.random()*500);
+        
+        document.querySelector("#total").innerText=price;
+        var btn=document.createElement("button");
+        btn.innerText="Remove";
+        btn.addEventListener("click",function(){
+            remove(index)
+        })
+        div.append(image,price,btn);
+        document.querySelector("#cont").append(div)
+         })
+     }
+     function remove(index){
+        cart.splice(index,1)
+        localStorage.setItem("dishcart",JSON.stringify(cart));
+        display(cart)
+        count=cart.length;
+        
+        localStorage.setItem("counter",JSON.stringify(count));
+     }
+</script>
